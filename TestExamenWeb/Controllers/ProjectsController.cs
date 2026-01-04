@@ -13,10 +13,12 @@ namespace TestExamenWeb.Controllers
     public class ProjectsController : Controller
     {
         private readonly IAdminRepository<Project> _projectRepository;
+        private readonly IAdminRepository<Student> _studentRepository;
 
-        public ProjectsController(IAdminRepository<Project> projectRepository)
+        public ProjectsController(IAdminRepository<Project> projectRepository, IAdminRepository<Student> studentRepository)
         {
             _projectRepository = projectRepository;
+            _studentRepository = studentRepository;
         }
 
         // GET: Projects
@@ -44,9 +46,10 @@ namespace TestExamenWeb.Controllers
         }
 
         // GET: Projects/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            
+            var students = await _studentRepository.GetListAsync();  // Voeg deze regel toe
+            ViewData["StudentId"] = new SelectList(students, "StudentId", "StudentName");  // Voeg deze regel toe
             return View();
         }
 
@@ -80,8 +83,8 @@ namespace TestExamenWeb.Controllers
             {
                 return NotFound();
             }
-            var projects = await _projectRepository.GetListAsync();
-            ViewData["StudentId"] = new SelectList(projects, "StudentId", "StudentName", project.StudentId);
+            var students = await _studentRepository.GetListAsync();
+            ViewData["StudentId"] = new SelectList(students, "StudentId", "StudentName", project.StudentId);
             return View(project);
         }
 
@@ -108,13 +111,14 @@ namespace TestExamenWeb.Controllers
                 else if (statusCode == HttpStatusCode.Conflict)
                 {
                     ModelState.AddModelError("", "Unable to update - this product was modified by another user. Click Back to List and try to update again.");
+
                     ViewData["StudentId"] = new SelectList(await _projectRepository.GetListAsync(), "StudentId", "StudentName", project.StudentId);
                     return View(project);
                 }
                 return RedirectToAction(nameof(Index));
             }
-            var projects = await _projectRepository.GetListAsync();
-            ViewData["StudentId"] = new SelectList(projects, "StudentId", "StudentName", project.StudentId);
+            var students = await _studentRepository.GetListAsync();
+            ViewData["StudentId"] = new SelectList(students, "StudentId", "StudentName", project.StudentId);
             return View(project);
         }
 
