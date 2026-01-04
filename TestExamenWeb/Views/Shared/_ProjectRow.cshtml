@@ -1,0 +1,15 @@
+﻿@model TestExamenWeb.Models.Project
+
+<tr>
+    <td>@Html.DisplayFor(model => model.Student.StudentName)</td>
+    <td>@Html.DisplayFor(model => model.SubmissionDate)</td>
+    <td>@Html.DisplayFor(model => model.TheoryScore)</td>
+    <td>@Html.DisplayFor(model => model.PracticalScore)</td>
+    <td>@Html.DisplayFor(model => model.PresentationScore)</td>
+    <td>@Html.DisplayFor(model => model.TotalGrade)</td>
+    <td>
+        <a asp-action="Edit" asp-route-id="@Model.ProjectId">Edit</a> |
+        <a asp-action="Details" asp-route-id="@Model.ProjectId">Details</a> |
+        <a asp-action="Delete" asp-route-id="@Model.ProjectId">Delete</a>
+    </td>
+</tr>

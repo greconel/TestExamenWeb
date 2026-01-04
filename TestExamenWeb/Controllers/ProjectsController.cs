@@ -65,11 +65,11 @@ namespace TestExamenWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
                 await _projectRepository.AddAsync(project);
                 return RedirectToAction(nameof(Index));
             }
-            
+
             return View(project);
         }
 

@@ -9,44 +9,21 @@
 <div>
     <h4>Project</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Student)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Student.StudentName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SubmissionDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SubmissionDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TheoryScore)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TheoryScore)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PracticalScore)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PracticalScore)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PresentationScore)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PresentationScore)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TotalGrade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TotalGrade)
-        </dd>
-    </dl>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>SubmissionDate</th>
+                <th>TheoryScore</th>
+                <th>PracticalScore</th>
+                <th>PresentationScore</th>
+                <th>TotalGrade</th>
+            </tr>
+        </thead>
+        <tbody>
+            <partial name="_ProjectRow" model="Model" />
+        </tbody>
+    </table>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.ProjectId">Edit</a> |
