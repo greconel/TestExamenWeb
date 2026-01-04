@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TestExamenWeb.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,10 @@ builder.Services.AddHttpClient<IAdminRepository<Project>, AdminRepository<Projec
 builder.Services.AddHttpClient<IAdminRepository<Student>, AdminRepository<Student>>(httpclient =>
     httpclient.BaseAddress = new Uri(builder.Configuration["ServiceAddress"] + "students/"));
 
+builder.Services.AddDbContext<ProjectContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectContextConnection")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ProjectContext>();
 
 var app = builder.Build();
 
@@ -27,10 +32,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 app.Run();

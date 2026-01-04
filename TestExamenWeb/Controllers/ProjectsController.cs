@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -46,6 +47,7 @@ namespace TestExamenWeb.Controllers
         }
 
         // GET: Projects/Create
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             var students = await _studentRepository.GetListAsync();  // Voeg deze regel toe
@@ -58,6 +60,7 @@ namespace TestExamenWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("ProjectId,StudentId,SubmissionDate,TheoryScore,PracticalScore,PresentationScore,TotalGrade")] Project project)
         {
             if (ModelState.IsValid)
@@ -71,6 +74,7 @@ namespace TestExamenWeb.Controllers
         }
 
         // GET: Projects/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -93,6 +97,7 @@ namespace TestExamenWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("ProjectId,StudentId,SubmissionDate,TheoryScore,PracticalScore,PresentationScore,TotalGrade")] Project project)
         {
             if (id != project.ProjectId)
@@ -123,6 +128,7 @@ namespace TestExamenWeb.Controllers
         }
 
         // GET: Projects/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -141,6 +147,7 @@ namespace TestExamenWeb.Controllers
         }
 
         // POST: Projects/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
